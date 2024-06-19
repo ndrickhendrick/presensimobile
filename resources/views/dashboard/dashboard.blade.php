@@ -9,14 +9,13 @@
                     @php
                         $path = Storage::url('uploads/karyawan/'.Auth::guard('karyawan')->user()->foto);
                     @endphp
-                    <img src="{{ url($path) }}" alt="avatar" class="imaged w64 rounded">
+                        <img src="{{ url($path) }}" alt="avatar" class="imaged w64 rounded" style="height:65px">
                     @else
-                    <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
+                        <img src="assets/img/sample/avatar/avatar1.jpg" alt="avatar" class="imaged w64 rounded">
                     @endif
                 </div>
                 <div id="user-info">
                     <h2 id="user-name">{{ Auth::guard('karyawan')->user()->nama_lengkap}}</h2>
-                    
                     <span id="user-role">{{ Auth::guard('karyawan')->user()->jabatan}}</span>
                 </div>
             </div>
@@ -136,7 +135,7 @@
                     <div class="col-3">
                         <div class="card">
                             <div class="card-body text-center" style="padding: 12px 12px !important; line-height: 0.8rem">
-                                <span class="badge bg-danger" style="position: absolute; top:3px; right:10px; font-size:0.6rem; z-index:999">10</span>
+                                <span class="badge bg-danger" style="position: absolute; top:3px; right:10px; font-size:0.6rem; z-index:999">X</span>
                                 <ion-icon name="newspaper-outline" style="font-size: 1.6rem" class="text-success mb-1"></ion-icon>
                                 <br>
                                 <span style="font-size: 0.8rem; font-weight: 500">Izin</span>
@@ -194,11 +193,8 @@
                                     </div>
                                     <div class="in">
                                         <div>{{ date("d-m-Y",strtotime($d->tgl_presensi)) }}</div>
-                                        <div>
                                             <span class="badge badge-success">{{ $d->jam_in }}</span>
-                                            <span class="badge bg-info">{{ $presensihariini != null && $d->jam_out != null ?
-                                         $d->jam_out : 'Belum Absen Pulang' }}</span>
-                                        </div>
+                                            <span class="badge bg-info"> {{ $presensihariini !== null && $d->jam_out !== null ? $d->jam_out : 'Belum Absen' }}</span>
                                     </div>
                                 </div>
                             </li>
@@ -216,7 +212,7 @@
                                             <b>{{ $l->nama_lengkap}}</b><br>
                                             <small class="text-muted">{{ $l->jabatan }}</small>
                                         </div>
-                                        <span class="badge {{ $l->jam_in < "07:00" ? "bg-success" : "bg-danger"}}">
+                                        <span class="badge {{ $l->jam_in < "07:30" ? "bg-success" : "bg-danger"}}">
                                                 {{ $l->jam_in}}
                                         </span>
                                     </div>

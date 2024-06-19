@@ -1,4 +1,5 @@
 @extends('layouts.presensi')
+
 @section('header')
 <!-- App Header -->
 <div class="appHeader bg-primary text-light">
@@ -17,17 +18,17 @@
 <div class="row" style="margin-top:4rem">
     <div clas="col">
         @php
-        $messagesuccess = Session::get('succcess');
-        $messageerror = Session::get('error');
+        $messageSuccess = Session::get('succcess');
+        $messageError = Session::get('error');
         @endphp
         @if(Session::get('success'))
         <div class="alert alert-success">
-            {{ $messagesuccess }}
+            {{ $messageSuccess }}
         </div>
         @endif
         @if(Session::get('error'))
         <div class="alert alert-danger">
-            {{ $messageerror }}
+            {{ $messageError }}
         </div>
         @endif
     </div>

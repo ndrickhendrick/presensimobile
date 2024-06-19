@@ -52,8 +52,8 @@ class PresensiController extends Controller
         $file = $folderPath . $fileName;
 
         
-        if($radius > 10){
-            echo "error| Maaf Anda Berada Diluar Radius|";
+        if($radius > 20){
+            echo "error| Maaf Anda Berada Diluar Radius, Jarak Anda " . $radius . " meter dari Kantor|radius";
         } else{
             if($cek > 0){
                 $data_pulang = [
@@ -109,6 +109,7 @@ class PresensiController extends Controller
         $karyawan = DB::table('karyawan')->where('nik', $nik)->first();
         return view('presensi.editprofile', compact('karyawan'));
     }
+    //updateprofile
     public function updateprofile(Request $request)
     {
         $nik = Auth::guard('karyawan')->user()->nik;
@@ -142,9 +143,27 @@ class PresensiController extends Controller
                 $folderPath = "public/uploads/karyawan/";
                 $request->file('foto')->storeAs($folderPath, $foto);
             }
-            return Redirect::back()->with(['success' => 'Data Berhasil diupdate!.']);
+            return Redirect::back()->with(['success' => 'Data Berhasil diupdate!']);
         }else {
-            return Redirect::back()->with(['error' => 'Data gagak di-Update!.']);
+            return Redirect::back()->with(['error' => 'Data gagal di-Update!']);
         }
+    }
+    public function histori(){
+        $namabulan = ["","Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+        return view('presensi.histori',compact('namabulan'));
+    }
+    public function gethistori(){
+        $bulan = $request->bulan;
+        $tahun = $request->tahun;
+        $nik = Auth::guard('karyawan')->user()->nik;
+
+        $histori = DB::table('presensi')
+            ->whereRaw('MONTH(tgl_presensi)="' . $bulan . '"')
+            ->whereRaw('YEAR(tgl_presensi)="' . $tahun . '"')
+            ->where('nik', $nik)
+            ->orderBy('tgl_presensi')
+            ->get();
+
+    return view('presensi.gethistori',compact('histori'));
     }
 }
